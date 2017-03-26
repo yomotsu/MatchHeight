@@ -20,6 +20,14 @@
     "build": "rollup --config",
     "release": "rollup --config && uglifyjs dist/MatchHeight.js -cm --preamble \"/*!\n * @author yomotsu\n * MatchHeight\n * https://github.com/yomotsu/MatchHeight\n * Released under the MIT License.\n */\" > dist/MatchHeight.min.js"
   },
+  "keywords": [
+    "matchHeight",
+    "equal",
+    "match",
+    "height",
+    "equalize",
+    "columns"
+  ],
   "engines": {
     "node": "6.9.4",
     "npm": "3.10.10"
