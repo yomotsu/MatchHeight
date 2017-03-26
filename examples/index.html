@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<style>
+.item{
+  vertical-align: top;
+  display: inline-block;
+  width: 150px;
+  padding: 0.5em;
+  margin: 10px;
+  background: #CDDC39;
+}
+.head{
+	padding: 5px;
+	background: #E6EE9C;
+}
+.text{
+	padding: 5px;
+	background: #DCE775;
+}
+</style>
+</head>
+<body>
+
+<p>MatchHeight automatically adapts window resizing. Also manual upate is available with `MatchHeight.update()`. When DOM has been changed (insert/remove), call `MatchHeight.init()` to watch new structure.</p>
+
+<div class="item">
+	<div data-mh class="head">title</div>
+	<div data-mh class="text">text text</div>
+	footer
+</div>
+
+<div class="item">
+	<div data-mh class="head">title</div>
+	<div data-mh class="text">long long long long long long long text</div>
+	footer
+</div>
+
+<div class="item">
+	<div data-mh class="head">long long long long title</div>
+	<div data-mh class="text">text text</div>
+	footer
+</div>
+
+<div class="item">
+	<div data-mh class="head">title</div>
+	<div data-mh class="text">text text</div>
+	footer
+</div>
+
+<div class="item">
+	<div data-mh class="head">title</div>
+	<div data-mh class="text">text text</div>
+	footer
+</div>
+
+<div class="item">
+	<div data-mh class="text">text text</div>
+	<div data-mh class="text">text text</div>
+	footer
+</div>
+
+<script src="../dist/MatchHeight.js"></script>
+</body>
+</html>
+
+
