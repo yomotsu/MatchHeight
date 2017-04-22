@@ -46,6 +46,10 @@
 		},
 		update: function update() {
 
+			if (elements.length === 0) {
+				return;
+			}
+
 			remains = Array.prototype.map.call(elements, function (el) {
 				return { el: el };
 			});
@@ -53,11 +57,11 @@
 			remains.forEach(function (item) {
 				item.el.style.minHeight = 'auto';
 			});
-			prosess();
+			process();
 		}
 	};
 
-	function prosess() {
+	function process() {
 
 		remains.forEach(function (item) {
 
@@ -70,23 +74,23 @@
 		remains.sort(function (a, b) {
 			return a.top - b.top;
 		});
-		var prosessingTop = remains[0].top;
-		var prosessingTargets = remains.filter(function (item) {
-			return item.top === prosessingTop;
+		var processingTop = remains[0].top;
+		var processingTargets = remains.filter(function (item) {
+			return item.top === processingTop;
 		});
-		var maxHeightInRow = prosessingTargets.reduce(function (max, item) {
+		var maxHeightInRow = processingTargets.reduce(function (max, item) {
 			return Math.max(max, item.height);
 		}, 0);
 
-		prosessingTargets.forEach(function (item) {
+		processingTargets.forEach(function (item) {
 
 			var paddingAndBorder = parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-top'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-bottom'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-top-width'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-bottom-width'), 10);
 			item.el.style.minHeight = maxHeightInRow - paddingAndBorder + 'px';
 		});
 
-		remains.splice(0, prosessingTargets.length);
+		remains.splice(0, processingTargets.length);
 
-		if (0 < remains.length) prosess();
+		if (0 < remains.length) process();
 	}
 
 	var throttledUpdate = throttle(MatchHeight$1.update, 200);
