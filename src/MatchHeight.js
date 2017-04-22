@@ -12,16 +12,18 @@ const MatchHeight = {
 
 	update () {
 
+		if ( elements.length === 0 ) { return; }
+
 		remains = Array.prototype.map.call( elements, ( el ) => { return { el: el }; } );
 		// remove all height before
 		remains.forEach( ( item ) => { item.el.style.minHeight = 'auto'; } );
-		prosess();
+		process();
 
 	}
 
 };
 
-function prosess() {
+function process() {
 
 	remains.forEach( ( item ) => {
 
@@ -33,11 +35,11 @@ function prosess() {
 	} );
 
 	remains.sort( ( a, b ) => { return a.top - b.top } );
-	const prosessingTop = remains[ 0 ].top;
-	const prosessingTargets = remains.filter( item => item.top === prosessingTop );
-	const maxHeightInRow = prosessingTargets.reduce( ( max, item ) => Math.max( max, item.height ), 0 );
+	const processingTop = remains[ 0 ].top;
+	const processingTargets = remains.filter( item => item.top === processingTop );
+	const maxHeightInRow = processingTargets.reduce( ( max, item ) => Math.max( max, item.height ), 0 );
 
-	prosessingTargets.forEach( ( item ) => {
+	processingTargets.forEach( ( item ) => {
 
 		const paddingAndBorder = 
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ), 10 ) +
@@ -48,9 +50,9 @@ function prosess() {
 
 	} );
 
-	remains.splice( 0, prosessingTargets.length );
+	remains.splice( 0, processingTargets.length );
 
-	if ( 0 < remains.length ) prosess();
+	if ( 0 < remains.length ) process();
 
 }
 
