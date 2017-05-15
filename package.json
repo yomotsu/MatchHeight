@@ -27,9 +27,5 @@
     "height",
     "equalize",
     "columns"
-  ],
-  "engines": {
-    "node": "6.9.4",
-    "npm": "3.10.10"
-  }
+  ]
 }
