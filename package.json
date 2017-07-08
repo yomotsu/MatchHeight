@@ -1,6 +1,6 @@
 {
   "name": "matchheight",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "Yomotsu",
   "license": "MIT",
   "main": "dist/MatchHeight.js",
