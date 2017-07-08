@@ -78,9 +78,9 @@
 		var processingTargets = remains.filter(function (item) {
 			return item.top === processingTop;
 		});
-		var maxHeightInRow = processingTargets.reduce(function (max, item) {
+		var maxHeightInRow = Math.ceil(processingTargets.reduce(function (max, item) {
 			return Math.max(max, item.height);
-		}, 0);
+		}, 0));
 
 		processingTargets.forEach(function (item) {
 

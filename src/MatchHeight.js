@@ -37,7 +37,7 @@ function process() {
 	remains.sort( ( a, b ) => { return a.top - b.top } );
 	const processingTop = remains[ 0 ].top;
 	const processingTargets = remains.filter( item => item.top === processingTop );
-	const maxHeightInRow = processingTargets.reduce( ( max, item ) => Math.max( max, item.height ), 0 );
+	const maxHeightInRow = Math.ceil( processingTargets.reduce( ( max, item ) => Math.max( max, item.height ), 0 ) );
 
 	processingTargets.forEach( ( item ) => {
 
