@@ -1,22 +1,39 @@
+let initialized = false;
 let elements;
 let remains;
 
 const MatchHeight = {
 
-	init () {
+	init() {
 
+		initialized = true;
 		elements = document.querySelectorAll( '[data-mh]' );
 		this.update();
 
 	},
 
-	update () {
+	update() {
 
-		if ( elements.length === 0 ) { return; }
+		if ( ! initialized ) {
 
-		remains = Array.prototype.map.call( elements, ( el ) => { return { el: el }; } );
+			this.init();
+			return;
+
+		}
+
+		if ( elements.length === 0 ) return;
+
+		remains = Array.prototype.map.call( elements, ( el ) => {
+
+			return { el: el };
+
+		} );
 		// remove all height before
-		remains.forEach( ( item ) => { item.el.style.minHeight = 'auto'; } );
+		remains.forEach( ( item ) => {
+
+			item.el.style.minHeight = '';
+
+		} );
 		process();
 
 	}
@@ -34,19 +51,20 @@ function process() {
 
 	} );
 
-	remains.sort( ( a, b ) => { return a.top - b.top } );
+	remains.sort( ( a, b ) => a.top - b.top );
+
 	const processingTop = remains[ 0 ].top;
 	const processingTargets = remains.filter( item => item.top === processingTop );
-	const maxHeightInRow = Math.ceil( processingTargets.reduce( ( max, item ) => Math.max( max, item.height ), 0 ) );
+	const maxHeightInRow = Math.max( ...processingTargets.map( ( item ) => item.height ) );
 
 	processingTargets.forEach( ( item ) => {
 
-		const paddingAndBorder = 
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ), 10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ), 10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ), 10 ) +
+		const paddingAndBorder =
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ),         10 ) +
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ),      10 ) +
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ),    10 ) +
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ), 10 );
-		item.el.style.minHeight = ( maxHeightInRow - paddingAndBorder ) + 'px';
+		item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder }px`;
 
 	} );
 
