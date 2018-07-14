@@ -29,27 +29,35 @@ function throttle(fn, threshhold) {
 	};
 }
 
+var initialized = false;
 var elements = void 0;
 var remains = void 0;
 
 var MatchHeight$1 = {
 	init: function init() {
 
+		initialized = true;
 		elements = document.querySelectorAll('[data-mh]');
 		this.update();
 	},
 	update: function update() {
 
-		if (elements.length === 0) {
+		if (!initialized) {
+
+			this.init();
 			return;
 		}
 
+		if (elements.length === 0) return;
+
 		remains = Array.prototype.map.call(elements, function (el) {
+
 			return { el: el };
 		});
 		// remove all height before
 		remains.forEach(function (item) {
-			item.el.style.minHeight = 'auto';
+
+			item.el.style.minHeight = '';
 		});
 		process();
 	}
@@ -68,13 +76,14 @@ function process() {
 	remains.sort(function (a, b) {
 		return a.top - b.top;
 	});
+
 	var processingTop = remains[0].top;
 	var processingTargets = remains.filter(function (item) {
 		return item.top === processingTop;
 	});
-	var maxHeightInRow = Math.ceil(processingTargets.reduce(function (max, item) {
-		return Math.max(max, item.height);
-	}, 0));
+	var maxHeightInRow = Math.max.apply(Math, processingTargets.map(function (item) {
+		return item.height;
+	}));
 
 	processingTargets.forEach(function (item) {
 
@@ -89,7 +98,17 @@ function process() {
 
 var throttledUpdate = throttle(MatchHeight$1.update, 200);
 
-MatchHeight$1.init();
+window.addEventListener('DOMContentLoaded', function onDomReady() {
+
+	MatchHeight$1.init();
+	window.removeEventListener('DOMContentLoaded', onDomReady);
+});
+window.addEventListener('load', function onLoad() {
+
+	MatchHeight$1.update();
+	window.removeEventListener('load', onLoad);
+});
+
 window.addEventListener('resize', throttledUpdate);
 
 export default MatchHeight$1;
