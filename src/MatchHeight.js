@@ -1,3 +1,4 @@
+const errorThreshold = 1; // in px
 let initialized = false;
 let elements;
 let remains;
@@ -8,7 +9,7 @@ const MatchHeight = {
 
 		initialized = true;
 		elements = document.querySelectorAll( '[data-mh]' );
-		this.update();
+		MatchHeight.update();
 
 	},
 
@@ -16,7 +17,7 @@ const MatchHeight = {
 
 		if ( ! initialized ) {
 
-			this.init();
+			MatchHeight.init();
 			return;
 
 		}
@@ -54,17 +55,18 @@ function process() {
 	remains.sort( ( a, b ) => a.top - b.top );
 
 	const processingTop = remains[ 0 ].top;
-	const processingTargets = remains.filter( item => item.top === processingTop );
+	const processingTargets = remains.filter( item => Math.abs( item.top - processingTop ) <= errorThreshold );
 	const maxHeightInRow = Math.max( ...processingTargets.map( ( item ) => item.height ) );
 
 	processingTargets.forEach( ( item ) => {
 
+		const error = processingTop - item.top + errorThreshold;
 		const paddingAndBorder =
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ),         10 ) +
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ),      10 ) +
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ),    10 ) +
 			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ), 10 );
-		item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder }px`;
+		item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder + error }px`;
 
 	} );
 
