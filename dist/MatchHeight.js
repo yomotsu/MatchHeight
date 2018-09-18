@@ -35,6 +35,7 @@
 		};
 	}
 
+	var errorThreshold = 1; // in px
 	var initialized = false;
 	var elements = void 0;
 	var remains = void 0;
@@ -44,13 +45,13 @@
 
 			initialized = true;
 			elements = document.querySelectorAll('[data-mh]');
-			this.update();
+			MatchHeight$1.update();
 		},
 		update: function update() {
 
 			if (!initialized) {
 
-				this.init();
+				MatchHeight$1.init();
 				return;
 			}
 
@@ -85,7 +86,7 @@
 
 		var processingTop = remains[0].top;
 		var processingTargets = remains.filter(function (item) {
-			return item.top === processingTop;
+			return Math.abs(item.top - processingTop) <= errorThreshold;
 		});
 		var maxHeightInRow = Math.max.apply(Math, processingTargets.map(function (item) {
 			return item.height;
@@ -93,8 +94,9 @@
 
 		processingTargets.forEach(function (item) {
 
+			var error = processingTop - item.top + errorThreshold;
 			var paddingAndBorder = parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-top'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('padding-bottom'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-top-width'), 10) + parseFloat(window.getComputedStyle(item.el).getPropertyValue('border-bottom-width'), 10);
-			item.el.style.minHeight = maxHeightInRow - paddingAndBorder + 'px';
+			item.el.style.minHeight = maxHeightInRow - paddingAndBorder + error + 'px';
 		});
 
 		remains.splice(0, processingTargets.length);
