@@ -3,21 +3,21 @@
   "version": "0.1.2",
   "author": "Yomotsu",
   "license": "MIT",
-  "main": "dist/MatchHeight.js",
   "repository": "yomotsu/MatchHeight",
+  "main": "dist/MatchHeight.js",
   "jsnext:main": "dist/MatchHeight.module.js",
   "module": "dist/MatchHeight.module.js",
+  "types": "dist/MatchHeight.d.ts",
   "devDependencies": {
-    "babel-preset-env": "1.2.2",
-    "rollup": "^0.41.4",
-    "rollup-plugin-babel": "2.7.1",
-    "rollup-watch": "^3.2.2",
-    "uglify-js": "^2.6.0"
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^3.16.0",
+    "terser": "^5.16.4",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "dev": "rollup --config --watch",
-    "build": "rollup --config",
-    "release": "rollup --config && uglifyjs dist/MatchHeight.js -cm --preamble \"/*!\n * @author yomotsu\n * MatchHeight\n * https://github.com/yomotsu/MatchHeight\n * Released under the MIT License.\n */\" > dist/MatchHeight.min.js"
+    "build": "rollup --config && terser dist/MatchHeight.js -o dist/MatchHeight.min.js --comments '/^!/'"
   },
   "keywords": [
     "matchHeight",

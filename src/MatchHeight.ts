@@ -1,7 +1,13 @@
+type Item = {
+	el: HTMLElement;
+	top: number;
+	height: number;
+}
+
 const errorThreshold = 1; // in px
 let initialized = false;
-let elements;
-let remains;
+let elements: NodeListOf<HTMLElement>;
+let remains: Item[];
 
 const MatchHeight = {
 
@@ -24,11 +30,15 @@ const MatchHeight = {
 
 		if ( elements.length === 0 ) return;
 
-		remains = Array.prototype.map.call( elements, ( el ) => {
+		remains = Array.prototype.map.call( elements, ( el: HTMLElement ): Item => {
 
-			return { el: el };
+			return {
+				el,
+				top: 0,
+				height: 0,
+			};
 
-		} );
+		} ) as Item[];
 		// remove all height before
 		remains.forEach( ( item ) => {
 
@@ -62,10 +72,10 @@ function process() {
 
 		const error = processingTop - item.top + errorThreshold;
 		const paddingAndBorder =
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ),         10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ),      10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ),    10 ) +
-			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ), 10 );
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ) ) +
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ) ) +
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ) ) +
+			parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ) );
 		item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder + error }px`;
 
 	} );

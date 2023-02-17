@@ -1,12 +1,12 @@
-function throttle( fn, threshhold ) {
+function throttle( fn: () => void, threshold: number ) {
 
-	let last, deferTimer;
+	let last: number, deferTimer: number;
 
 	return function () {
 
 		const now = Date.now();
 
-		if ( last && now < last + threshhold ) {
+		if ( last && now < last + threshold ) {
 
 			clearTimeout( deferTimer );
 			deferTimer = setTimeout( function () {
@@ -14,7 +14,7 @@ function throttle( fn, threshhold ) {
 				last = now;
 				fn();
 
-			}, threshhold );
+			}, threshold );
 
 		} else {
 
