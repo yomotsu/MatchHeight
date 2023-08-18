@@ -10,7 +10,7 @@ const license = `/*!
  */`;
 
 export default {
-	input: './src/main.ts',
+	input: './src/match-height.ts',
 	output: [
 		{
 			format: 'umd',

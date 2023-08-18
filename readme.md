@@ -13,9 +13,10 @@ No dependencies, Light weight, Makes elements equal height.
 
 ### Standalone
 
-Copy MatchHeight.js from `/dist/MatchHeight.js` and place it in your project.
+Copy MatchHeight.js from `/dist/MatchHeight.js` and place it in your project, then call `new MatchHeight()`.
 ```html
-<script src="./js/MatchHeight.js"></script>
+<script src="./js/match-height.js"></script>
+<script>new MatchHeight();</script>
 ```
 
 ### NPM
@@ -26,6 +27,7 @@ $ npm install --save matchheight
 then
 ```javascript
 import MatchHeight from 'matchheight';
+MatchHeight();
 ```
 
 for more info, see [the demo](https://yomotsu.github.io/MatchHeight/examples/).
