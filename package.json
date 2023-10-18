@@ -9,15 +9,15 @@
   "module": "dist/match-height.module.js",
   "types": "dist/match-height.d.ts",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
-    "rollup": "^3.28.0",
-    "terser": "^5.19.2",
-    "tslib": "^2.6.1",
-    "typescript": "^5.1.6"
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.1.4",
+    "terser": "^5.22.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "dev": "rollup --config --watch",
-    "build": "rollup --config && terser dist/MatchHeight.js -o dist/MatchHeight.min.js --comments '/^!/'"
+    "build": "rollup --config && terser dist/match-height.js -o dist/match-height.min.js --comments '/^!/'"
   },
   "keywords": [
     "matchHeight",
