@@ -91,13 +91,18 @@ class MatchHeight {
 		processingTargets.forEach( ( item ) => {
 
 			const error = processingTop - item.top + errorThreshold;
-			const paddingAndBorder =
-				parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ) ) +
-				parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ) ) +
-				parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ) ) +
-				parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ) );
-			item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder + error }px`;
+			const isBorderBox = window.getComputedStyle( item.el ).getPropertyValue( 'box-sizing' ) === 'border-box';
 
+			if (isBorderBox) {
+				item.el.style.minHeight = `${ maxHeightInRow + error }px`;
+			} else {
+				const paddingAndBorder =
+					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ) ) +
+					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ) ) +
+					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ) ) +
+					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ) );
+				item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder + error }px`;
+			}
 		} );
 
 		this._remains.splice( 0, processingTargets.length );
