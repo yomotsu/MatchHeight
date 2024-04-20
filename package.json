@@ -9,11 +9,11 @@
   "module": "dist/match-height.module.js",
   "types": "dist/match-height.d.ts",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.5",
-    "rollup": "^4.1.4",
-    "terser": "^5.22.0",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "rollup": "^4.14.3",
+    "terser": "^5.30.3",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "dev": "rollup --config --watch",
