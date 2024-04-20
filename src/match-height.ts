@@ -91,17 +91,22 @@ class MatchHeight {
 		processingTargets.forEach( ( item ) => {
 
 			const error = processingTop - item.top + errorThreshold;
-			const isBorderBox = window.getComputedStyle( item.el ).getPropertyValue( 'box-sizing' ) === 'border-box';
+			const getPropertyValue = window.getComputedStyle( item.el ).getPropertyValue;
+			const isBorderBox = getPropertyValue( 'box-sizing' ) === 'border-box';
 
-			if (isBorderBox) {
+			if ( isBorderBox ) {
+
 				item.el.style.minHeight = `${ maxHeightInRow + error }px`;
+
 			} else {
+
 				const paddingAndBorder =
-					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-top' ) ) +
-					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'padding-bottom' ) ) +
-					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-top-width' ) ) +
-					parseFloat( window.getComputedStyle( item.el ).getPropertyValue( 'border-bottom-width' ) );
+					parseFloat( getPropertyValue( 'padding-top' ) ) +
+					parseFloat( getPropertyValue( 'padding-bottom' ) ) +
+					parseFloat( getPropertyValue( 'border-top-width' ) ) +
+					parseFloat( getPropertyValue( 'border-bottom-width' ) );
 				item.el.style.minHeight = `${ maxHeightInRow - paddingAndBorder + error }px`;
+
 			}
 		} );
 
