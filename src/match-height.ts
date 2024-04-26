@@ -91,7 +91,8 @@ class MatchHeight {
 		processingTargets.forEach( ( item ) => {
 
 			const error = processingTop - item.top + errorThreshold;
-			const getPropertyValue = window.getComputedStyle( item.el ).getPropertyValue;
+			const style = window.getComputedStyle( item.el );
+			const getPropertyValue = (property: string) => style.getPropertyValue(property);
 			const isBorderBox = getPropertyValue( 'box-sizing' ) === 'border-box';
 
 			if ( isBorderBox ) {
