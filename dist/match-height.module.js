@@ -71,7 +71,9 @@ class MatchHeight {
         const maxHeightInRow = Math.max(...processingTargets.map((item) => item.height));
         processingTargets.forEach((item) => {
             const error = processingTop - item.top + errorThreshold;
-            const getPropertyValue = window.getComputedStyle(item.el).getPropertyValue;
+            const getPropertyValue = (value) => {
+                return window.getComputedStyle(item.el).getPropertyValue(value);
+            };
             const isBorderBox = getPropertyValue('box-sizing') === 'border-box';
             if (isBorderBox) {
                 item.el.style.minHeight = `${maxHeightInRow + error}px`;
