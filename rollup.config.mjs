@@ -1,6 +1,8 @@
-import pkg from './package.json' assert { type: "json" };
+import { readFileSync } from 'fs';
 import typescript from 'typescript';
 import rollupTypescript from '@rollup/plugin-typescript';
+
+const pkg = JSON.parse( readFileSync( './package.json', 'utf-8' ) );
 
 const license = `/*!
  * @author yomotsu

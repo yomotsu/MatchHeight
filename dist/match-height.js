@@ -11,19 +11,20 @@
 })(this, (function () { 'use strict';
 
 	function throttle(fn, threshold) {
-	    let last, deferTimer;
-	    return function () {
+	    let last;
+	    let deferTimer;
+	    return function (...args) {
 	        const now = Date.now();
-	        if (last && now < last + threshold) {
+	        if (last !== undefined && now < last + threshold) {
 	            clearTimeout(deferTimer);
-	            deferTimer = setTimeout(function () {
+	            deferTimer = setTimeout(() => {
 	                last = now;
-	                fn();
+	                fn(...args);
 	            }, threshold);
 	        }
 	        else {
 	            last = now;
-	            fn();
+	            fn(...args);
 	        }
 	    };
 	}
@@ -38,7 +39,7 @@
 	        if (document.readyState === 'loading') {
 	            document.addEventListener('DOMContentLoaded', update, { once: true });
 	        }
-	        if (document.readyState === 'interactive') {
+	        else if (document.readyState === 'interactive') {
 	            document.addEventListener('load', update, { once: true });
 	        }
 	        else {
@@ -77,16 +78,16 @@
 	        const maxHeightInRow = Math.max(...processingTargets.map((item) => item.height));
 	        processingTargets.forEach((item) => {
 	            const error = processingTop - item.top + errorThreshold;
-	            const getPropertyValue = (value) => window.getComputedStyle(item.el).getPropertyValue(value);
-	            const isBorderBox = getPropertyValue('box-sizing') === 'border-box';
+	            const styles = window.getComputedStyle(item.el);
+	            const isBorderBox = styles.boxSizing === 'border-box';
 	            if (isBorderBox) {
 	                item.el.style.minHeight = `${maxHeightInRow + error}px`;
 	            }
 	            else {
-	                const paddingAndBorder = parseFloat(getPropertyValue('padding-top')) +
-	                    parseFloat(getPropertyValue('padding-bottom')) +
-	                    parseFloat(getPropertyValue('border-top-width')) +
-	                    parseFloat(getPropertyValue('border-bottom-width'));
+	                const paddingAndBorder = (parseFloat(styles.paddingTop) || 0) +
+	                    (parseFloat(styles.paddingBottom) || 0) +
+	                    (parseFloat(styles.borderTopWidth) || 0) +
+	                    (parseFloat(styles.borderBottomWidth) || 0);
 	                item.el.style.minHeight = `${maxHeightInRow - paddingAndBorder + error}px`;
 	            }
 	        });

@@ -1,30 +1,27 @@
-function throttle( fn: () => void, threshold: number ) {
+export default function throttle<T extends (...args: any[]) => void>( fn: T, threshold: number ) {
 
-	let last: number, deferTimer: number;
+	let last: number | undefined;
+	let deferTimer: ReturnType<typeof setTimeout> | undefined;
 
-	return function () {
+	return function ( ...args: Parameters<T> ) {
 
 		const now = Date.now();
 
-		if ( last && now < last + threshold ) {
+		if ( last !== undefined && now < last + threshold ) {
 
 			clearTimeout( deferTimer );
-			deferTimer = setTimeout( function () {
-
+			deferTimer = setTimeout( () => {
 				last = now;
-				fn();
-
+				fn( ...args );
 			}, threshold );
 
 		} else {
 
 			last = now;
-			fn();
+			fn( ...args );
 
 		}
 
 	};
 
 }
-
-export default throttle;

@@ -1,2 +1,1 @@
-declare function throttle(fn: () => void, threshold: number): () => void;
-export default throttle;
+export default function throttle<T extends (...args: any[]) => void>(fn: T, threshold: number): (...args: Parameters<T>) => void;
